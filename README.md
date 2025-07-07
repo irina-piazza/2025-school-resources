@@ -4,4 +4,4 @@ The purpose of this repository is to centralize resources used for the first edi
 
 For additional information about the summer school, check the dedicated [website](https://ecolediadem.sciencesconf.org/?lang=en).
 
-![image](.assets/summer-school-program.png)
+![image](.assets/summer-school-prog.png)
