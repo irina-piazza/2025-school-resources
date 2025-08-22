@@ -9,6 +9,7 @@ Try to take your time on the activities, be free to skip some of the open questi
 The objective is to get acquainted with the tools, not to master them. The martery will come with time and practice!
 
 
-1. Clustering [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jpalastus/Notebooks/blob/main/Oleron%20Solidification%20School%202024/01_Clustering.ipynb)
-2. Classification [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jpalastus/Notebooks/blob/main/Oleron%20Solidification%20School%202024/02_Classification.ipynb)
-3. Regression [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jpalastus/Notebooks/blob/main/Oleron%20Solidification%20School%202024/03_Regression.ipynb) 
+1. Clustering [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DIADEM-Summer-School/2025-school-resources/blob/f2c0185d907c9fd1d2daaa84441b8019fadfeea5/01_Machine-Learning/01_Clustering.ipynb)
+2. Classification [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DIADEM-Summer-School/2025-school-resources/blob/f2c0185d907c9fd1d2daaa84441b8019fadfeea5/01_Machine-Learning/02_Classification.ipynb)
+3. Regression [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DIADEM-Summer-School/2025-school-resources/blob/f2c0185d907c9fd1d2daaa84441b8019fadfeea5/01_Machine-Learning/03_Regression.ipynb) 
+
