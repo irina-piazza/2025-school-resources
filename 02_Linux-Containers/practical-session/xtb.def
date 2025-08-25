@@ -53,6 +53,7 @@ Stage: final
     /opt/intel/oneapi/mkl/latest/lib/libmkl_intel_thread.so.2  /opt/intel/lib/libmkl_intel_thread.so.2
     /opt/intel/oneapi/mkl/latest/lib/libmkl_core.so.2  /opt/intel/lib/libmkl_core.so.2
     /opt/intel/oneapi/mkl/2025.2/lib/libmkl_avx2.so.2  /opt/intel/lib/libmkl_avx2.so.2
+    /opt/intel/oneapi/mkl/2025.2/lib/libmkl_def.so.2  /opt/intel/lib/libmkl_def.so.2
     /opt/intel/oneapi/compiler/2025.2/lib/libimf.so  /opt/intel/lib/libimf.so
     /opt/intel/oneapi/compiler/2025.2/lib/libiomp5.so  /opt/intel/lib/libiomp5.so
     /opt/intel/oneapi/compiler/2025.2/lib/libsvml.so  /opt/intel/lib/libsvml.so
