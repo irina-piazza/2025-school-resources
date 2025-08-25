@@ -12,7 +12,7 @@ Stage: devel
     apt-get install -y wget gnupg2 bash gcc meson ninja-build git
     
     # --------------     INTEL COMPILERS     -------------- #
-    # This part append intel's repository to our list of downloadable software
+    # This part append intel repository to our list of downloadable software
     # then install required compilers and libraries
     mkdir -p /etc/apt/keyrings
     wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | gpg --dearmor > /etc/apt/keyrings/intel-sw-products.gpg
@@ -42,8 +42,24 @@ Stage: devel
 
     ninja -C build
 
+Bootstrap: docker
+From: ubuntu:24.04
+Stage: final
+
+%files from devel
+    /opt/xtb-bleed/build/ /opt/xtb-bleed/build/
+    /opt/intel/oneapi/compiler/2025.2/lib/libifcore.so.5  /opt/intel/lib/libifcore.so.5
+    /opt/intel/oneapi/mkl/latest/lib/libmkl_intel_lp64.so.2  /opt/intel/lib/libmkl_intel_lp64.so.2
+    /opt/intel/oneapi/mkl/latest/lib/libmkl_intel_thread.so.2  /opt/intel/lib/libmkl_intel_thread.so.2
+    /opt/intel/oneapi/mkl/latest/lib/libmkl_core.so.2  /opt/intel/lib/libmkl_core.so.2
+    /opt/intel/oneapi/mkl/2025.2/lib/libmkl_avx2.so.2  /opt/intel/lib/libmkl_avx2.so.2
+    /opt/intel/oneapi/compiler/2025.2/lib/libimf.so  /opt/intel/lib/libimf.so
+    /opt/intel/oneapi/compiler/2025.2/lib/libiomp5.so  /opt/intel/lib/libiomp5.so
+    /opt/intel/oneapi/compiler/2025.2/lib/libsvml.so  /opt/intel/lib/libsvml.so
+    /opt/intel/oneapi/compiler/2025.2/lib/libintlc.so.5  /opt/intel/lib/libintlc.so.5
+
 %environment
-  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/intel/oneapi/mkl/latest/lib/:/opt/intel/oneapi/compiler/2025.2/lib/"
+  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/intel/lib/"
 
 %runscript
     /opt/xtb-bleed/build/xtb $*
