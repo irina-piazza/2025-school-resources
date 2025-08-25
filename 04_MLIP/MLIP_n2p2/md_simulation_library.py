@@ -45,26 +45,85 @@ def _download_potential_if_needed(filepath, url):
 def setup_simulation(potential_filepath, vscale):
     """
     Sets up the atomic supercell and the LAMMPS calculator.
-    Accepts a pathlib.Path object for the potential file.
+    
+    This function prepares a complete, ready-to-use simulation object by:
+    1. Ensuring the interatomic potential file is available.
+    2. Building a large block of Aluminum atoms (a "supercell").
+    3. Configuring the LAMMPS physics engine with the potential.
+    4. Attaching the engine (calculator) to the atoms object.
+
+    Args:
+        potential_filepath (Path): The path to the interatomic potential file.
+        vscale (float): A volume scaling factor to adjust the crystal's density.
+    
+    Returns:
+        ase.Atoms: A fully configured ASE Atoms object ready for simulation.
     """
+    # --- Step 1: Ensure the Interatomic Potential File is Available ---
+    # The potential file defines the "physics" of the simulation by describing
+    # the forces between atoms. For metals like Aluminum, the Embedded Atom
+    # Method (EAM) is a highly effective model.
     potential_url = "https://www.ctcms.nist.gov/potentials/Download/2009--Zhakhovskii-V-V-Inogamov-N-A-Petrov-Y-V-et-al--Al/2/Al-2009.eam.alloy"
     
+    # This helper function checks if the file exists and is valid. If not, it
+    # downloads it from the specified URL. This makes the script portable.
     _download_potential_if_needed(potential_filepath, potential_url)
     
+    # This is a final safety check. If the file is still missing after the
+    # download attempt, the program stops with a clear error, preventing a more
+    # cryptic crash from LAMMPS later on.
     assert potential_filepath.is_file(), f"Potential file is missing: {potential_filepath}!"
 
+    # --- Step 2: Build the Atomic System (Supercell) ---
+    # This line uses the Atomic Simulation Environment (ASE) library to construct
+    # the virtual block of Aluminum we want to simulate.
+    # It's a two-part process:
+    # 1. bulk(...): Creates a small, perfect repeating crystal unit cell.
+    #    - 'Al': Specifies Aluminum. ASE knows its default crystal structure is FCC.
+    #    - a=...: Sets the lattice constant (the side length of the cubic unit cell).
+    #      - 4.0495 is the experimental value for Aluminum in Angstroms.
+    #      - vscale**(1/3) adjusts this length. Since vscale is a *volume*
+    #        scale factor, we take the cube root to apply it to a length.
+    # 2. .repeat((5, 5, 5)): Duplicates the small unit cell to build a larger
+    #    "supercell" (5x5x5 unit cells). This is crucial for simulating a
+    #    bulk material and minimizing boundary effects.
     atoms = bulk('Al', cubic=True, a=4.0495 * vscale**(1 / 3)).repeat((5, 5, 5))
 
+    # --- Step 3: Configure the LAMMPS Calculator (the "Physics Engine") ---
+    # This creates an instance of LAMMPSlib, which is ASE's interface to the
+    # powerful LAMMPS MD engine.
     lmp = LAMMPSlib(
+        # lmpcmds is a list of commands sent directly to LAMMPS for setup.
         lmpcmds=[
+            # "pair_style": Tells LAMMPS what kind of physics to use.
+            # 'eam/alloy' is the style required for our potential file.
             "pair_style eam/alloy",
+            
+            # "pair_coeff": Links the physics style to the actual potential file.
+            # It tells LAMMPS: "For all pairs of atoms (* *), use the parameters
+            # found in the file at `potential_filepath` for the element 'Al'".
             f"pair_coeff * * {str(potential_filepath)} Al" 
         ],
+        
+        # LAMMPS uses numerical atom types (1, 2, ...), not chemical symbols.
+        # This line maps ASE's 'Al' symbol to LAMMPS's atom type 1.
         atom_types={'Al': 1},
+        
+        # Suppress the default LAMMPS log file (log.lammps).
         log_file=None,
+        
+        # Performance optimization: keeps the LAMMPS process running in the
+        # background, avoiding costly restarts at every simulation step.
         keep_alive=True
     )
+
+    # --- Step 4: Attach the Calculator to the Atoms and Return ---
+    # This line connects the atoms object to the physics engine. Now, whenever a
+    # physical property (like forces or energy) is requested from `atoms`,
+    # it will automatically use the `lmp` calculator to compute it.
     atoms.calc = lmp
+    
+    # Return the fully configured simulation object.
     return atoms
 
 def initialize_dynamics(atoms, T_start, timestep_fs):
