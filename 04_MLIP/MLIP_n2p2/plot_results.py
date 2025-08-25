@@ -10,10 +10,6 @@ def plot_potential_energy(traj_data, output_filename="potential_energy_plot.html
     """
     Creates an interactive plot of the potential energy from the
     simulation trajectory and saves it to an HTML file.
-
-    Args:
-        traj_data (list): A list of snapshots from the simulation.
-        output_filename (str): The name of the output HTML file.
     """
     if not traj_data:
         print("\n- No trajectory data to plot.")
@@ -39,15 +35,31 @@ def plot_potential_energy(traj_data, output_filename="potential_energy_plot.html
         )
     )
 
-    # 4. Update the layout (titles, labels, etc.)
+    # 4. Update the layout with larger font sizes
     fig.update_layout(
-        title_text='<b>Potential Energy Evolution During Simulation</b>',
-        title_x=0.5,
-        xaxis_title='Simulation Step',
-        yaxis_title='<b>Potential Energy (eV)</b>',
+        title=dict(
+            text='<b>Potential Energy Evolution During Simulation</b>',
+            font=dict(size=36),  # Title font size
+            x=0.5  # Center title
+        ),
+        xaxis=dict(
+            title_text='<b>Simulation Step',
+            title_font=dict(size=30),  # X-axis title font size
+            tickfont=dict(size=30)     # X-axis tick label size
+        ),
+        yaxis=dict(
+            title_text='<b>Potential Energy (eV)</b>',
+            title_font=dict(size=30),  # Y-axis title font size
+            tickfont=dict(size=30)     # Y-axis tick label size
+        ),
+        legend=dict(
+            font=dict(size=20) # Legend item font size
+        ),
         template='plotly_white'
     )
 
     # 5. Save the plot to an HTML file
     fig.write_html(output_filename)
     print(f"- Plot successfully saved to: {output_filename}")
+    #fig.show()
+
