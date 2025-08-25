@@ -10,4 +10,4 @@
 Suggestion: check all the time if the path is correct, may you change something.
 
 
-1. MLIP n2p2 [![Open in Colab](https://colab.research.google.com/drive/1HM_lJiYWzRKcLeW29Sh6EGWzOmBCR_ND#scrollTo=tXkuu4z8N08Y)
+1. MLIP n2p2 [![Open in Colab]](https://colab.research.google.com/drive/1HM_lJiYWzRKcLeW29Sh6EGWzOmBCR_ND#scrollTo=tXkuu4z8N08Y)
