@@ -37,3 +37,6 @@ venv.bak/
 
 # System files
 .DS_Store
+
+.idea/  # JetBrains folders
+
