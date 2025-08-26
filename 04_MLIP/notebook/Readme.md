@@ -1,5 +1,5 @@
-## **Instruction**:
-1. Change your runtime type on colab (top right button) select if is possible v2-8 TPU. If you arrive to set up
+## **MLIP hands-on some information to easy start**:
+1. Change your runtime type on colab (top right button or runtime button in the bar) select if is possible v2-8 TPU. If you arrive to set up
     the runtime v2-8 TPU you can run mpirun command with 32 core (instead 1) and it you can run lammps during the
     tutorial, if you don't may skip and run direct the valudation using the output trajectory saved for you.
 3. Connect colab with your drive and upload the A_lammps_n2p2_calculation. You will need to run lammps_n2p2
